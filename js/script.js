@@ -4,8 +4,7 @@ project 1 - A Random Quote Generator
 ******************************************/
 
 //Quotes contained in an array of objects
-const quotes = [
-  {
+const quotes = [{
     quote: "Every moment is a fresh beginning.",
     source: "T.S. Eliot",
     citation: "www.keepinspiring.me/famous-quotes",
@@ -92,31 +91,43 @@ function printQuote() {
   }
 
   //Check whether the quote includes an occupation for the quote's source
-  if(randomQuote.occupation){
+  if (randomQuote.occupation) {
     quoteData += `, <span class="occupation">${randomQuote.occupation}</span>`; //concatinate .occupation into quoteData variable
   }
 
-  quoteData += "</p>"; //concatinate closing </p> tag to HTML variable so it can be viewed
+  quoteData += "</p>"; //add closing tag for html data
 
-  //Call function getRandombackgroundColor(), send to DOM to change to a random color whenpage loaded/refreshed or when button is clicked
+  //Call function getRandombackgroundColor(), send to DOM
+  //background color changes upon refresh or button click
   document.body.style.backgroundColor = getRandomBackgroundColor();
 
-  //return new random quote to the DOM so the user can see the data
+
+
+  //return new random quote directly to the DOM
   return document.getElementById('quote-box').innerHTML = quoteData;
 }
 
-//Get random background color
+//Get a random background color
 function getRandomBackgroundColor() {
-  const bgColor = [];
+  const bgColor = []; //Initialize a new array to hold rgb values
 
-  for (let i = 0; i < 3; i++){
-    bgColor.push(Math.floor(Math.random() * 256));
+  //Return 3 random numbers between 0 and 256
+  for (let i = 0; i < 3; i++) {
+    bgColor.push(Math.floor(Math.random() * 255)); //add numbers to array bgColor
   }
 
-  let color = bgColor.map(x => x.toString(16)).join('');
+  //Convert the 3 numbers in bgColor array to hex using .toString(16) and concatenate using .join()
+  //Note: learned converting to hex (.toString(16) specifically) from stackoverflow.com
+  let color = bgColor.map(hexColor => hexColor.toString(16)).join('');
+
+  //If hex val is less than 6, add a 0 on the end to ensure virtually no chance of color staying the same
+  if(color.length < 6) color += "0";
 
   return `#${color}`;
 }
+
+//Using setInterval, call printQuote() to refresh quote every 10 seconds
+setInterval(function(){printQuote();}, 10000);
 
 /***
  * click event listener for the print quote button
