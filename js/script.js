@@ -98,8 +98,8 @@ function printQuote() {
 
   quoteData += "</p>"; //concatinate closing </p> tag to HTML variable so it can be viewed
 
-  //Call function getRandombackgroundColor() to adjust background when there is a new quote loaded
-  getRandomBackgroundColor();
+  //Call function getRandombackgroundColor(), send to DOM to change to a random color whenpage loaded/refreshed or when button is clicked
+  document.body.style.backgroundColor = getRandomBackgroundColor();
 
   //return new random quote to the DOM so the user can see the data
   return document.getElementById('quote-box').innerHTML = quoteData;
@@ -113,13 +113,11 @@ function getRandomBackgroundColor() {
     bgColor.push(Math.floor(Math.random() * 256));
   }
 
-
   let color = bgColor.map(x => x.toString(16)).join('');
 
   return `#${color}`;
 }
-console.log(getRandomBackgroundColor());
-document.body.style.backgroundColor = getRandomBackgroundColor();
+
 /***
  * click event listener for the print quote button
  * DO NOT CHANGE THE CODE BELOW!!
