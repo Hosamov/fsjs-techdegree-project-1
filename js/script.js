@@ -73,6 +73,25 @@ function getRandomQuote() {
   return quotes[getQuote]; //return the random number so we can use it in printQuote() to retrieve a new random quote
 }
 
+//Get a random background color
+function getRandomBackgroundColor() {
+  const bgColor = []; //Initialize a new array to hold rgb values
+
+  //Return 3 random numbers between 0 and 255
+  for (let i = 0; i < 3; i++) {
+    bgColor.push(Math.floor(Math.random() * 256)); //add numbers to array bgColor
+  }
+
+  //Convert the 3 numbers in bgColor array to hex using .toString(16) and concatenate using .join()
+  //Note: learned converting to hex (.toString(16) specifically) from stackoverflow.com
+  let color = bgColor.map(hexColor => hexColor.toString(16)).join('');
+
+  //If hex val is less than 6, add a 0 on the end to ensure virtually no chance of color staying the same
+  if(color.length < 6) color += "0";
+
+  return `#${color}`;
+}
+
 //printQuote Function
 function printQuote() {
   let randomQuote = getRandomQuote(); //call getRandomQuote() function to return the random quote needed
@@ -101,29 +120,8 @@ function printQuote() {
   //background color changes upon refresh or button click
   document.body.style.backgroundColor = getRandomBackgroundColor();
 
-
-
   //return new random quote directly to the DOM
   return document.getElementById('quote-box').innerHTML = quoteData;
-}
-
-//Get a random background color
-function getRandomBackgroundColor() {
-  const bgColor = []; //Initialize a new array to hold rgb values
-
-  //Return 3 random numbers between 0 and 256
-  for (let i = 0; i < 3; i++) {
-    bgColor.push(Math.floor(Math.random() * 255)); //add numbers to array bgColor
-  }
-
-  //Convert the 3 numbers in bgColor array to hex using .toString(16) and concatenate using .join()
-  //Note: learned converting to hex (.toString(16) specifically) from stackoverflow.com
-  let color = bgColor.map(hexColor => hexColor.toString(16)).join('');
-
-  //If hex val is less than 6, add a 0 on the end to ensure virtually no chance of color staying the same
-  if(color.length < 6) color += "0";
-
-  return `#${color}`;
 }
 
 //Using setInterval, call printQuote() to refresh quote every 10 seconds
