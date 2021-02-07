@@ -4,7 +4,8 @@ project 1 - A Random Quote Generator
 ******************************************/
 
 //Quotes contained in an array of objects
-const quotes = [{
+const quotes = [
+  {
     quote: "Every moment is a fresh beginning.",
     source: "T.S. Eliot",
     citation: "www.keepinspiring.me/famous-quotes",
@@ -66,10 +67,21 @@ const quotes = [{
   }
 ];
 
+const quotesLength = quotes.length;
+let prevQuote; //hold value of previous quote
+
 //getRandomQuote Function
 function getRandomQuote() {
-  //Get a random quote
-  let getQuote = Math.floor(Math.random() * Math.floor(quotes.length)); //Make a random integer value between 0 and quotes.length using Math.floor()
+  let getQuote = Math.floor(Math.random() * Math.floor(quotesLength)); //Make a random integer value between 0 and quotes.length using Math.floor()
+
+  //code to make sure the same quote doesn't show twice in a row
+  if (getQuote === prevQuote) {
+    getQuote += 1; //add 1 if there's a match
+    if(getQuote > (quotesLength -1)) getQuote = 0; //return to first position in array if over array length
+  }
+  prevQuote = getQuote;
+
+  //console.log(getQuote);
   return quotes[getQuote]; //return the random number so we can use it in printQuote() to retrieve a new random quote
 }
 
@@ -95,6 +107,7 @@ function getRandomBackgroundColor() {
 //printQuote Function
 function printQuote() {
   let randomQuote = getRandomQuote(); //call getRandomQuote() function to return the random quote needed
+
   //capture the random quote w/ source in HTML tags for viewing
   let quoteData = `<p class="quote">${randomQuote.quote}</p>
                    <p class="source">${randomQuote.source}`;
@@ -124,8 +137,8 @@ function printQuote() {
   return document.getElementById('quote-box').innerHTML = quoteData;
 }
 
-//Using setInterval, call printQuote() to refresh quote every 10 seconds
-setInterval(function(){printQuote();}, 10000);
+//Using setInterval, call printQuote() to refresh quote every 15 seconds
+setInterval(function(){ printQuote() }, 15000);
 
 /***
  * click event listener for the print quote button
